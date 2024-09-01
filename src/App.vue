@@ -4,12 +4,14 @@
     <!-- <NewSite /> -->
     <!-- <ProductList /> -->
     <!-- <PaymentTable /> -->
-    <DomainCard />
+    <!-- <DomainCard /> -->
+    <DeliverySettings />
   </div>
 </template>
 
 <script>
-import DomainCard from "./components/DomainCard.vue";
+import DeliverySettings from "./components/DeliverySettings.vue";
+// import DomainCard from "./components/DomainCard.vue";
 import LeftSidebar from "./components/LeftSidebar.vue";
 // import PaymentTable from "./components/PaymentTable.vue";
 // import NewSite from "./components/NewSite.vue";
@@ -22,7 +24,8 @@ export default {
     // NewSite,
     // ProductList,
     // PaymentTable,
-    DomainCard,
+    // DomainCard,
+    DeliverySettings,
   },
 };
 </script>

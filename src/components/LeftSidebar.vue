@@ -280,7 +280,11 @@ export default {
       }
     },
     chooseBox(boxNo) {
-      this.dialogBox = boxNo;
+      if (this.dialogBox === boxNo && boxNo != 2) {
+        this.dialogBox = 0;
+      } else {
+        this.dialogBox = boxNo;
+      }
     },
     handleClickOutside(event) {
       const menuIds = ["status", "dialogbox1", "dialogbox2"];

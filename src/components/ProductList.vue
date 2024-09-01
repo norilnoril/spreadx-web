@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <div class="pt-16 pr-24 pb-14 pl-96">
+    <div class="pt-16 pr-32 pb-14 pl-[430px]">
       <div class="flex items-end justify-between mb-4">
         <h4
           class="text-xl font-bold leading-[12px] font-istok-web text-customBlue"
@@ -15,7 +15,7 @@
       </div>
 
       <div
-        class="h-full pl-5 pr-20 overflow-y-auto border py-7 border-borderColor1 rounded-2xl"
+        class="h-full pl-5 pr-20 overflow-y-auto border py-7 border-customBorder1 rounded-2xl"
       >
         <div class="flex items-center justify-between">
           <h1 class="font-istok-web font-bold text-[28px] leading-8 text-black">
