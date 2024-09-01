@@ -21,6 +21,7 @@ module.exports = {
         customBorder2: "#FFFFFF80",
         customBorder3: "#74777E",
         customBorder4: "#F1F5FA",
+        customBorder5: "#D7D7D7",
       },
       backgroundImage: (theme) => ({
         "gradient-linear": "linear-gradient(to right, #1660BE, #2C89FF)",
