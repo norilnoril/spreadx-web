@@ -1217,10 +1217,94 @@
               </div>
             </div>
 
+            <!-- FULFILLMENT HOURS -->
+            <div class="my-8">
+              <div
+                v-for="(day, index) in days"
+                :key="index"
+                class="flex items-start mb-4 space-x-12"
+              >
+                <div class="flex items-center w-40 space-x-9">
+                  <input
+                    type="checkbox"
+                    v-model="day.enabled"
+                    class="w-5 h-5 text-blue-600 form-checkbox"
+                  />
+                  <span
+                    class="text-lg font-bold leading-7 text-gray-900 font-istok-web"
+                    >{{ day.name }}</span
+                  >
+                </div>
+
+                <div
+                  v-if="day.enabled"
+                  class="flex flex-col mb-3 -mt-3 space-y-4"
+                >
+                  <div
+                    v-for="(slot, slotIndex) in day.slots"
+                    :key="slotIndex"
+                    class="flex items-center space-x-4"
+                  >
+                    <input
+                      type="time"
+                      v-model="slot.start"
+                      class="px-6 py-3 text-xl font-normal leading-8 border border-gray-300 rounded-md w-44 font-istok-web placeholder:font-istok-web placeholder:font-normal placeholder:text-xl"
+                    />
+                    <span class="text-xl font-normal leading-7 font-istok-web"
+                      >to</span
+                    >
+                    <input
+                      type="time"
+                      v-model="slot.end"
+                      class="px-6 py-3 text-xl font-normal leading-8 border border-gray-300 rounded-md w-44 font-istok-web placeholder:font-istok-web placeholder:font-normal placeholder:text-xl"
+                    />
+                    <button
+                      v-if="slotIndex === day.slots.length - 1"
+                      @click="addTimeSlot(index)"
+                      class="text-blue-500 hover:text-blue-700 focus:outline-none"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-5 h-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 4v16m8-8H4"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div v-else class="flex items-center mb-3 -mt-3 space-x-4">
+                  <input
+                    type="time"
+                    disabled
+                    class="px-6 py-3 text-xl font-normal leading-8 text-gray-500 bg-gray-200 border border-gray-300 rounded-md w-44"
+                    value="09:00"
+                  />
+                  <span class="text-xl font-normal leading-7 font-istok-web"
+                    >to</span
+                  >
+                  <input
+                    type="time"
+                    disabled
+                    class="px-6 py-3 text-xl font-normal leading-8 text-gray-500 bg-gray-200 border border-gray-300 rounded-md w-44"
+                    value="17:00"
+                  />
+                </div>
+              </div>
+            </div>
+
             <!-- choose time zone -->
             <div class="relative flex flex-col w-56">
               <label
-                class="absolute px-1 text-sm text-gray-500 bg-white -top-2 left-3"
+                class="absolute px-1 text-sm text-gray-500 bg-white -top-2 left-4"
               >
                 Time Zone
               </label>
@@ -1248,65 +1332,72 @@
             <!-- divider  -->
             <div class="w-full mt-8 mb-6 border-b-8 border-customBorder5"></div>
 
-            <div class="">
+            <!-- Restricted dates -->
+            <div>
               <h2 class="text-[22px] font-bold text-gray-800 mb-5">
                 Restricted dates
               </h2>
-              <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-10">
-                  <div class="relative flex flex-col w-56">
-                    <label
-                      class="absolute px-1 text-sm text-gray-500 bg-white -top-2 left-3"
-                    >
-                      Date
+              <div
+                v-for="(date, index) in dates"
+                :key="index"
+                class="mb-4 date-entry"
+              >
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-10">
+                    <div class="relative flex flex-col w-56">
+                      <label
+                        class="absolute px-1 text-sm text-gray-500 bg-white -top-2 left-4"
+                      >
+                        Date
+                      </label>
+                      <input
+                        type="date"
+                        v-model="date.value"
+                        class="px-6 py-3 border border-gray-300 rounded-md"
+                      />
+                    </div>
+
+                    <label class="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        v-model="date.repeat"
+                        class="w-4 h-4 text-gray-600 form-checkbox"
+                      />
+                      <span class="text-gray-700">Repeat every year</span>
                     </label>
-                    <input
-                      type="date"
-                      v-model="selectedDate"
-                      class="p-2 pt-5 border border-gray-300 rounded-md"
-                    />
                   </div>
 
-                  <label class="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      v-model="repeatEveryYear"
-                      class="w-[23px] h-[23px] text-gray-600 form-checkbox"
-                    />
-                    <span class="text-gray-700">Repeat every year</span>
-                  </label>
+                  <button
+                    @click="removeDate(index)"
+                    class="text-white bg-customBlue focus:outline-none rounded-full w-[22px] h-[22px] flex items-center justify-center"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-5 h-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </button>
                 </div>
 
-                <button
-                  @click="removeDate"
-                  class="text-white bg-customBlue focus:outline-none rounded-full w-[22px] h-[22px] flex items-center justify-center"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
+                <hr class="my-4" />
               </div>
-
-              <hr class="my-4" />
 
               <button
                 @click="addDate"
-                class="flex items-center text-lg font-bold leading-7 text-blue-500 hover:text-blue-700 font-istok-web"
+                class="flex items-center text-blue-500 hover:text-blue-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-6 h-6 mr-1"
+                  class="w-5 h-5 mr-1"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -1358,6 +1449,52 @@ export default {
       orderPlacementTooltip: false,
       fulfillmentTooltip: false,
       selectedTimeZone: "Asia/Dubai",
+      days: [
+        {
+          name: "Sunday",
+          enabled: false,
+          slots: [{ start: "09:00", end: "17:00" }],
+        },
+        {
+          name: "Monday",
+          enabled: true,
+          slots: [
+            { start: "09:00", end: "12:00" },
+            { start: "13:00", end: "17:00" },
+          ],
+        },
+        {
+          name: "Tuesday",
+          enabled: true,
+          slots: [{ start: "09:00", end: "17:00" }],
+        },
+        {
+          name: "Wednesday",
+          enabled: true,
+          slots: [{ start: "09:00", end: "17:00" }],
+        },
+        {
+          name: "Thursday",
+          enabled: true,
+          slots: [{ start: "09:00", end: "17:00" }],
+        },
+        {
+          name: "Friday",
+          enabled: true,
+          slots: [{ start: "09:00", end: "17:00" }],
+        },
+        {
+          name: "Saturday",
+          enabled: false,
+          slots: [{ start: "09:00", end: "17:00" }],
+        },
+      ],
+      dates: [
+        {
+          value: "2024-08-07",
+          repeat: false,
+        },
+      ],
     };
   },
   methods: {
@@ -1370,13 +1507,18 @@ export default {
     removeTag(index) {
       this.tags.splice(index, 1);
     },
-    removeDate() {
-      this.selectedDate = null;
-      this.repeatEveryYear = false;
+    addTimeSlot(dayIndex) {
+      // Add a new time slot with default values to the selected day
+      this.days[dayIndex].slots.push({ start: "09:00", end: "17:00" });
     },
     addDate() {
-      this.selectedDate = new Date().toISOString().substr(0, 10); // Sets the current date as default
-      this.repeatEveryYear = false;
+      this.dates.push({
+        value: new Date().toISOString().substr(0, 10),
+        repeat: false,
+      });
+    },
+    removeDate(index) {
+      this.dates.splice(index, 1);
     },
   },
 };
