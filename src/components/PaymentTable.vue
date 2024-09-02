@@ -49,6 +49,7 @@
                     class="w-4 h-4 text-blue-600 form-checkbox"
                   />
                 </th>
+                <th class="p-3 font-medium text-left text-gray-600"></th>
                 <th class="p-3 font-medium text-left text-gray-600">Name</th>
                 <th class="p-3 font-medium text-left text-gray-600">Code</th>
                 <th class="p-3 font-medium text-left text-gray-600">Type</th>
@@ -63,39 +64,34 @@
                     class="w-4 h-4 text-blue-600 form-checkbox"
                   />
                 </td>
-                <td class="flex items-center p-3">
-                  <span
-                    class="inline-flex items-center justify-center w-8 h-8 font-semibold text-gray-700 bg-gray-300 rounded-full"
+                <td class="p-3">
+                  <div
+                    class="inline-flex items-center justify-center px-5 py-4 font-semibold text-gray-700 bg-gray-300 rounded"
                   >
                     {{ item.initials }}
-                  </span>
-                  <span class="ml-2">{{ item.name }}</span>
+                  </div>
+                </td>
+                <td class="p-3 text-gray-700">
+                  {{ item.name }}
                 </td>
                 <td class="p-3 text-gray-700">{{ item.code }}</td>
                 <td class="p-3 text-gray-700">{{ item.type }}</td>
                 <td class="p-3 text-right">
-                  <label class="flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      v-model="item.enabled"
-                      class="sr-only"
-                    />
-                    <div
-                      :class="{
-                        'bg-gray-200': !item.enabled,
-                        'bg-blue-600': item.enabled,
-                      }"
-                      class="relative w-10 h-4 transition-colors duration-200 ease-in-out rounded-full"
+                  <div class="flex items-center space-x-2">
+                    <!-- Toggle Switch -->
+                    <label
+                      class="relative inline-flex items-center cursor-pointer"
                     >
-                      <span
-                        :class="{
-                          'translate-x-0': !item.enabled,
-                          'translate-x-6': item.enabled,
-                        }"
-                        class="absolute top-0 left-0 w-6 h-6 transition-transform duration-200 ease-in-out transform bg-white rounded-full"
-                      ></span>
-                    </div>
-                  </label>
+                      <input
+                        type="checkbox"
+                        class="sr-only peer"
+                        v-model="item.enabled"
+                      />
+                      <div
+                        class="w-10 h-4 bg-customGray2 rounded-full peer peer-checked:after:translate-x-2/3 peer-checked:after:bg-customDarkBlue peer-checked:after:border-customDarkBlue after:content-[''] after:absolute after:-top-1.5 after:-left-1 after:bg-customBlack after:border-customBlack after:border after:rounded-full after:h-7 after:w-7 after:transition-all peer-checked:bg-customLightBlue"
+                      ></div>
+                    </label>
+                  </div>
                 </td>
               </tr>
             </tbody>

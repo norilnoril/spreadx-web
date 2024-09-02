@@ -69,6 +69,7 @@
 
         <!-- 3rd box  -->
         <div
+          v-if="isAssignDeliveryTimes === true"
           class="bg-white border-[0.88px] rounded-lg shadow-sm mt-3 p-9 border-customBorder1"
         >
           <!-- Header with Icon and Delivery Text -->
@@ -170,7 +171,7 @@
                 <div
                   v-for="(tag, index) in tags"
                   :key="index"
-                  class="flex items-center px-3 py-1 text-black bg-blue-100 rounded-full"
+                  class="flex items-center px-3 py-1 bg-blue-100 rounded-full text-textColor5"
                 >
                   <span>{{ tag }}</span>
                   <button
@@ -198,12 +199,12 @@
               <!-- Content for Radius -->
               <input
                 type="text"
-                class="px-6 py-3 border border-gray-300 rounded-lg w-52 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                class="px-6 py-3 border border-gray-300 rounded-lg w-52 focus:outline-none"
                 placeholder="0"
               />
               <div class="relative w-40">
                 <select
-                  class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none"
                 >
                   <option>km</option>
                   <option>miles</option>
@@ -232,7 +233,7 @@
 
           <!-- Estimate time  -->
           <div>
-            <div class="flex items-center">
+            <div class="flex items-center space-x-2">
               <h2
                 class="text-[22px] font-bold leading-8 text-textColor5 font-istok-web"
               >
@@ -280,12 +281,12 @@
                 <div class="flex items-center space-x-2">
                   <input
                     type="text"
-                    class="px-6 py-3 border border-gray-300 rounded-lg w-52 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="px-6 py-3 border border-gray-300 rounded-lg w-52 focus:outline-none"
                     placeholder="0"
                   />
                   <div class="relative w-40">
                     <select
-                      class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none"
                     >
                       <option>minutes</option>
                       <option>hours</option>
@@ -313,12 +314,12 @@
                 <div class="flex items-center space-x-2">
                   <input
                     type="text"
-                    class="px-6 py-3 border border-gray-300 rounded-lg w-52 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="px-6 py-3 border border-gray-300 rounded-lg w-52 focus:outline-none"
                     placeholder="0"
                   />
                   <div class="relative w-40">
                     <select
-                      class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none"
                     >
                       <option>minutes</option>
                       <option>hours</option>
@@ -356,7 +357,7 @@
               <div class="relative w-full mt-4">
                 <select
                   v-model="selectedDeliveryFeeOption"
-                  class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none"
                 >
                   <option value="free">Free delivery</option>
                   <option value="charge">
@@ -491,12 +492,16 @@
                 </label>
               </div>
 
-              <div class="flex items-center w-full mt-4 space-x-3">
+              <div
+                v-if="isServiceFeeEnabled === true"
+                class="flex items-center w-full mt-4 space-x-3"
+              >
                 <!-- Input Field -->
                 <div
+                  v-if="serviceFee === 'setAmount'"
                   class="flex items-center w-full px-6 py-3 border border-gray-300 rounded-lg"
                 >
-                  <span class="mr-2 text-gray-700">AED</span>
+                  <span class="pr-2 text-gray-700">AED</span>
                   <input
                     type="text"
                     class="w-full focus:outline-none"
@@ -504,13 +509,32 @@
                   />
                 </div>
 
+                <div
+                  v-if="serviceFee === 'percentageOfTotal'"
+                  class="relative w-full"
+                >
+                  <input
+                    type="number"
+                    v-model="percentage"
+                    class="w-full px-6 py-3 border border-gray-300 rounded-lg appearance-none focus:outline-none"
+                    placeholder="0"
+                  />
+                  <span
+                    class="absolute text-lg font-normal leading-6 text-gray-500 font-istok-web right-4 top-3.5"
+                    >%</span
+                  >
+                </div>
+
                 <!-- Select Field -->
                 <div class="relative w-full">
                   <select
-                    class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    v-model="serviceFee"
+                    class="block w-full px-6 py-3 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none"
                   >
-                    <option>Set amount</option>
-                    <option>Percentage of total</option>
+                    <option value="setAmount">Set amount</option>
+                    <option value="percentageOfTotal">
+                      Percentage of total
+                    </option>
                   </select>
                   <div
                     class="absolute inset-y-0 right-0 flex items-center px-2 text-gray-500 pointer-events-none"
@@ -532,16 +556,14 @@
             </div>
 
             <!-- divider  -->
-            <div
-              class="w-full mt-10 mb-6 border-b-8 border-customBorder5"
-            ></div>
+            <div class="w-full mt-10 border-b-8 border-customBorder5"></div>
 
             <div>
               <!-- Minimum Order Amount Section -->
-              <div class="flex items-center justify-between">
+              <div class="flex items-center justify-between mt-8">
                 <div class="flex items-center space-x-2">
                   <h2
-                    class="text-[22px] font-bold leading-8 text-black font-istok-web"
+                    class="text-[22px] font-bold leading-8 text-textColor5 font-istok-web"
                   >
                     Minimum order amount
                   </h2>
@@ -567,14 +589,13 @@
                         stroke-linejoin="round"
                       />
                     </svg>
-                  </div>
-
-                  <div
-                    v-if="minOrderTooltip"
-                    class="absolute bottom-4 z-10 p-[6px] text-sm text-white bg-gray-400 rounded-md shadow-lg left-4 w-64"
-                  >
-                    Require a minimum amount for orders to be eligible for
-                    delivery
+                    <div
+                      v-if="minOrderTooltip"
+                      class="absolute bottom-4 z-10 p-[6px] text-sm text-white bg-gray-400 rounded-md shadow-lg left-4 w-64"
+                    >
+                      Require a minimum amount for orders to be eligible for
+                      delivery
+                    </div>
                   </div>
                 </div>
 
@@ -590,9 +611,10 @@
                 </label>
               </div>
               <div
-                class="flex items-center w-1/2 px-4 py-2 mt-4 mb-5 border border-gray-300 rounded-lg"
+                v-if="isMinOrderEnabled === true"
+                class="flex items-center w-1/2 px-6 py-3 mt-4 mb-5 border border-gray-300 rounded-lg"
               >
-                <span class="mr-2 text-gray-700">AED</span>
+                <span class="pr-2 text-gray-700">AED</span>
                 <input
                   type="text"
                   class="w-full focus:outline-none"
@@ -602,15 +624,13 @@
             </div>
 
             <!-- Divider -->
-            <div
-              class="w-full mt-10 mb-6 border-b-8 border-customBorder5"
-            ></div>
+            <div class="w-full mt-10 border-b-8 border-customBorder5"></div>
 
             <!-- No-contact Delivery Section -->
-            <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between mt-8">
               <div class="flex items-center space-x-2">
                 <h2
-                  class="text-[22px] font-bold leading-8 text-black font-istok-web"
+                  class="text-[22px] font-bold leading-8 text-textColor5 font-istok-web"
                 >
                   No-contact delivery
                 </h2>
@@ -663,6 +683,7 @@
 
         <!-- 4th box  -->
         <div
+          v-if="isAssignDeliveryTimes === true"
           class="bg-white border-[0.88px] rounded-lg shadow-sm mt-3 p-9 border-customBorder1"
         >
           <!-- Header with Icon and Delivery Text -->
@@ -689,7 +710,7 @@
             >
           </div>
 
-          <div>
+          <div v-if="isAssignDeliveryTimes === true">
             <!-- Heading -->
             <h2 class="text-[22px] font-bold text-gray-800 mb-2">
               When can orders be delivered?
@@ -697,76 +718,150 @@
 
             <!-- Radio Buttons -->
             <div class="flex flex-col">
-              <label class="flex items-center justify-between py-2 border-b">
+              <label
+                class="flex items-center justify-between py-2 border-b cursor-pointer"
+              >
                 <span class="text-xl font-normal leading-7 text-gray-800">
                   Orders are delivered at specific times (e.g., 12:30 pm)
                 </span>
-                <input
-                  type="radio"
-                  name="deliveryTimeOption"
-                  v-model="deliveryTimeOption"
-                  value="specificTime"
-                  class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                />
+
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="deliveryTimeOption"
+                    v-model="deliveryTimeOption"
+                    value="specificTime"
+                    class="hidden"
+                  />
+                  <span
+                    class="flex items-center justify-center w-6 h-6 rounded-full"
+                    :class="{
+                      'border-8 border-customBlue':
+                        deliveryTimeOption === 'specificTime',
+                      'border-[2.63px] border-[#A4A4A4]':
+                        deliveryTimeOption === 'deliveryHours',
+                    }"
+                  >
+                  </span>
+                </label>
               </label>
 
-              <label class="flex items-center justify-between py-2 border-b">
+              <label
+                class="flex items-center justify-between py-2 border-b cursor-pointer"
+              >
                 <span class="text-xl font-normal leading-7 text-gray-800">
                   Orders are delivered any time during my delivery hours (e.g.,
                   9:00 am - 5:00 pm)
                 </span>
 
-                <input
-                  type="radio"
-                  name="deliveryTimeOption"
-                  v-model="deliveryTimeOption"
-                  value="deliveryHours"
-                  class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-                />
+                <label class="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="deliveryTimeOption"
+                    v-model="deliveryTimeOption"
+                    value="deliveryHours"
+                    class="hidden"
+                  />
+                  <span
+                    class="flex items-center justify-center w-6 h-6 rounded-full"
+                    :class="{
+                      'border-8 border-customBlue':
+                        deliveryTimeOption === 'deliveryHours',
+                      'border-[2.63px] border-[#A4A4A4]':
+                        deliveryTimeOption === 'specificTime',
+                    }"
+                  >
+                  </span>
+                </label>
               </label>
             </div>
           </div>
 
           <!-- Divider -->
-          <div class="w-full border-b-8 mt-9 mb-9 border-customBorder5"></div>
+          <div
+            v-if="isAssignDeliveryTimes === true"
+            class="w-full border-b-8 mt-9 mb-9 border-customBorder5"
+          ></div>
 
-          <div class="flex flex-col">
+          <div v-if="isAssignDeliveryTimes === true" class="flex flex-col">
             <h2 class="text-[22px] font-bold text-gray-800 mb-2">
               If a customer places an order during your fulfillment hours, what
               is the soonest that the order can be delivered?
             </h2>
 
-            <label class="flex items-center justify-between py-2 border-b">
+            <label
+              class="flex items-center justify-between py-2 border-b cursor-pointer"
+            >
               <span class="text-xl font-normal leading-7 text-gray-800">
                 The same day they place the order
               </span>
-              <input
-                type="radio"
-                name="fulfillmentTimeOption"
-                v-model="fulfillmentTimeOption"
-                value="sameDay"
-                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-              />
+
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="fulfillmentTimeOption"
+                  v-model="fulfillmentTimeOption"
+                  value="sameDay"
+                  class="hidden"
+                />
+                <span
+                  class="flex items-center justify-center w-6 h-6 rounded-full"
+                  :class="{
+                    'border-8 border-customBlue':
+                      fulfillmentTimeOption === 'sameDay',
+                    'border-[2.63px] border-[#A4A4A4]':
+                      fulfillmentTimeOption === 'followingDay',
+                  }"
+                >
+                </span>
+              </label>
             </label>
 
-            <label class="flex items-center justify-between py-2 border-b">
+            <label
+              class="flex items-center justify-between py-2 border-b cursor-pointer"
+            >
               <span class="text-xl font-normal leading-7 text-gray-800">
                 On a following day (i.e., one or more days in the future)
               </span>
-              <input
-                type="radio"
-                name="fulfillmentTimeOption"
-                v-model="fulfillmentTimeOption"
-                value="followingDay"
-                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-              />
+
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="fulfillmentTimeOption"
+                  v-model="fulfillmentTimeOption"
+                  value="followingDay"
+                  class="hidden"
+                />
+                <span
+                  class="flex items-center justify-center w-6 h-6 rounded-full"
+                  :class="{
+                    'border-8 border-customBlue':
+                      fulfillmentTimeOption === 'followingDay',
+                    'border-[2.63px] border-[#A4A4A4]':
+                      fulfillmentTimeOption === 'sameDay',
+                  }"
+                >
+                </span>
+              </label>
             </label>
           </div>
 
           <!-- Divider -->
-          <div class="w-full border-b-8 mt-9 mb-9 border-customBorder5"></div>
+          <div
+            v-if="
+              isAssignDeliveryTimes === true &&
+              fulfillmentTimeOption === 'sameDay'
+            "
+            class="w-full border-b-8 mt-9 mb-9 border-customBorder5"
+          ></div>
 
-          <div class="flex flex-col">
+          <div
+            v-if="
+              isAssignDeliveryTimes === true &&
+              fulfillmentTimeOption === 'sameDay'
+            "
+            class="flex flex-col"
+          >
             <div class="flex items-center space-x-2">
               <h2 class="text-[22px] font-bold text-gray-800 mb-2">
                 Do you start preparing orders as soon as they are received?
@@ -808,20 +903,37 @@
               </div>
             </div>
 
-            <label class="flex items-center justify-between py-2 border-b">
+            <label
+              class="flex items-center justify-between py-2 border-b cursor-pointer"
+            >
               <span class="text-xl font-normal leading-7 text-gray-800">
                 I generally start preparing orders as soon as they are received
               </span>
-              <input
-                type="radio"
-                name="orderPreparationOption"
-                v-model="orderPreparationOption"
-                value="startImmediately"
-                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-              />
+
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="orderPreparationOption"
+                  v-model="orderPreparationOption"
+                  value="startImmediately"
+                  class="hidden"
+                />
+                <span
+                  class="flex items-center justify-center w-6 h-6 rounded-full"
+                  :class="{
+                    'border-8 border-customBlue':
+                      orderPreparationOption === 'startImmediately',
+                    'border-[2.63px] border-[#A4A4A4]':
+                      orderPreparationOption === 'startAfterCertainTime',
+                  }"
+                >
+                </span>
+              </label>
             </label>
 
-            <label class="flex items-center justify-between py-2 border-b">
+            <label
+              class="flex items-center justify-between py-2 border-b cursor-pointer"
+            >
               <div class="flex items-center space-x-2">
                 <span class="text-xl font-normal leading-7 text-gray-800"
                   >I only start preparing orders after a certain time</span
@@ -863,20 +975,45 @@
                   </div>
                 </div>
               </div>
-              <input
-                type="radio"
-                name="orderPreparationOption"
-                v-model="orderPreparationOption"
-                value="startAfterCertainTime"
-                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-              />
+
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="orderPreparationOption"
+                  v-model="orderPreparationOption"
+                  value="startAfterCertainTime"
+                  class="hidden"
+                />
+                <span
+                  class="flex items-center justify-center w-6 h-6 rounded-full"
+                  :class="{
+                    'border-8 border-customBlue':
+                      orderPreparationOption === 'startAfterCertainTime',
+                    'border-[2.63px] border-[#A4A4A4]':
+                      orderPreparationOption === 'startImmediately',
+                  }"
+                >
+                </span>
+              </label>
             </label>
           </div>
 
           <!-- Divider -->
-          <div class="w-full border-b-8 mt-9 mb-9 border-customBorder5"></div>
+          <div
+            v-if="
+              isAssignDeliveryTimes === true &&
+              fulfillmentTimeOption === 'sameDay'
+            "
+            class="w-full border-b-8 mt-9 mb-9 border-customBorder5"
+          ></div>
 
-          <div class="flex flex-col">
+          <div
+            v-if="
+              isAssignDeliveryTimes === true &&
+              fulfillmentTimeOption === 'sameDay'
+            "
+            class="flex flex-col"
+          >
             <label
               class="mb-3 text-[22px] font-bold leading-8 text-textColor5 font-istok-web"
             >
@@ -892,9 +1029,21 @@
           </div>
 
           <!-- Divider -->
-          <div class="w-full mb-8 border-b-8 mt-9 border-customBorder5"></div>
+          <div
+            v-if="
+              isAssignDeliveryTimes === true &&
+              fulfillmentTimeOption === 'followingDay'
+            "
+            class="w-full mb-8 border-b-8 mt-9 border-customBorder5"
+          ></div>
 
-          <div class="">
+          <div
+            v-if="
+              isAssignDeliveryTimes === true &&
+              fulfillmentTimeOption === 'followingDay'
+            "
+            class=""
+          >
             <div class="flex items-center justify-between">
               <label
                 class="mb-2 w-4/5 text-[22px] font-bold leading-8 text-textColor5 font-istok-web"
@@ -915,7 +1064,7 @@
                 ></div>
               </label>
             </div>
-            <div>
+            <div v-if="isDeliverySchedulingEnabled === true">
               <!-- Input Field and Text -->
               <span class="mr-5 text-base text-gray-700">
                 Can be scheduled up to
@@ -932,17 +1081,31 @@
             </div>
 
             <!-- Additional Information -->
-            <p class="mt-2 text-sm text-gray-500">
+            <p
+              v-if="isDeliverySchedulingEnabled === true"
+              class="mt-2 text-sm text-gray-500"
+            >
               0 days minimum; 365 days maximum
             </p>
           </div>
 
           <!-- Divider -->
-          <div class="w-full border-b-8 mt-9 mb-9 border-customBorder5"></div>
+          <div
+            v-if="
+              isAssignDeliveryTimes === true &&
+              fulfillmentTimeOption === 'followingDay'
+            "
+            class="w-full border-b-8 mt-9 mb-9 border-customBorder5"
+          ></div>
 
-          <div>
+          <div
+            v-if="
+              isAssignDeliveryTimes === true &&
+              fulfillmentTimeOption === 'followingDay'
+            "
+          >
             <div class="flex items-center justify-between">
-              <label class="flex items-center w-4/5 mb-2 space-x-2">
+              <label class="w-4/5 mb-2 space-x-2">
                 <span
                   class="text-[22px] font-bold leading-8 text-textColor5 font-istok-web"
                   >Do you want SpreadX to limit the number of orders that can be
@@ -998,7 +1161,7 @@
                 </label>
               </div>
             </div>
-            <div>
+            <div v-if="isLimitEnabled === true">
               <!-- Input Field and Text -->
               <span class="mr-4 text-base text-gray-700"> Allow </span>
               <input
@@ -1047,7 +1210,9 @@
               <!-- Info Tooltip -->
             </div>
 
-            <label class="flex items-center justify-between py-2 border-b">
+            <label
+              class="flex items-center justify-between py-2 border-b cursor-pointer"
+            >
               <div class="flex items-center space-x-2">
                 <span class="text-xl font-normal leading-7 text-gray-800">
                   Print order tickets based on pickup and delivery time
@@ -1086,16 +1251,31 @@
                   </div>
                 </div>
               </div>
-              <input
-                type="radio"
-                name="ticketPrintOption"
-                v-model="ticketPrintOption"
-                value="printBasedOnTime"
-                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-              />
+
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="ticketPrintOption"
+                  v-model="ticketPrintOption"
+                  value="printBasedOnTime"
+                  class="hidden"
+                />
+                <span
+                  class="flex items-center justify-center w-6 h-6 rounded-full"
+                  :class="{
+                    'border-8 border-customBlue':
+                      ticketPrintOption === 'printBasedOnTime',
+                    'border-[2.63px] border-[#A4A4A4]':
+                      ticketPrintOption === 'printWhenPlaced',
+                  }"
+                >
+                </span>
+              </label>
             </label>
 
-            <label class="flex items-center justify-between py-2 border-b">
+            <label
+              class="flex items-center justify-between py-2 border-b cursor-pointer"
+            >
               <div class="flex items-center space-x-2">
                 <span class="text-xl font-normal leading-7 text-gray-800"
                   >Print order tickets when the order is placed</span
@@ -1136,13 +1316,26 @@
                   </div>
                 </div>
               </div>
-              <input
-                type="radio"
-                name="ticketPrintOption"
-                v-model="ticketPrintOption"
-                value="printWhenPlaced"
-                class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
-              />
+
+              <label class="inline-flex items-center">
+                <input
+                  type="radio"
+                  name="ticketPrintOption"
+                  v-model="ticketPrintOption"
+                  value="printWhenPlaced"
+                  class="hidden"
+                />
+                <span
+                  class="flex items-center justify-center w-6 h-6 rounded-full"
+                  :class="{
+                    'border-8 border-customBlue':
+                      ticketPrintOption === 'printWhenPlaced',
+                    'border-[2.63px] border-[#A4A4A4]':
+                      ticketPrintOption === 'printBasedOnTime',
+                  }"
+                >
+                </span>
+              </label>
             </label>
           </div>
         </div>
@@ -1369,7 +1562,7 @@
 
                   <button
                     @click="removeDate(index)"
-                    class="text-white bg-customBlue focus:outline-none rounded-full w-[22px] h-[22px] flex items-center justify-center"
+                    class="text-white bg-customBlue focus:outline-none rounded-full p-1 w-[22px] h-[22px] flex items-center justify-center"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -1393,11 +1586,11 @@
 
               <button
                 @click="addDate"
-                class="flex items-center text-blue-500 hover:text-blue-700"
+                class="flex items-center text-lg font-bold leading-7 text-customBlue"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5 mr-1"
+                  class="w-6 h-6 mr-1 font-bold"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                 >
@@ -1449,6 +1642,7 @@ export default {
       orderPlacementTooltip: false,
       fulfillmentTooltip: false,
       selectedTimeZone: "Asia/Dubai",
+      serviceFee: "setAmount",
       days: [
         {
           name: "Sunday",

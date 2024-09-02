@@ -19,7 +19,7 @@
       >
         <div class="flex items-center justify-center h-full">
           <div
-            class="w-full flex items-center p-4 space-x-10 rounded-xl bg-[#EBF0FF]"
+            class="w-full flex items-center p-8 space-x-10 rounded-xl bg-[#EBF0FF]"
           >
             <div class="mr-4 text-4xl text-gray-700">
               <svg
@@ -44,52 +44,45 @@
                   <p class="text-gray-500">SpreadX Domain</p>
                 </div>
                 <div class="flex items-center">
-                  <label class="flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      v-model="isPublished"
-                      class="sr-only"
-                    />
-                    <div
-                      :class="{
-                        'bg-gray-200': !isPublished,
-                        'bg-blue-600': isPublished,
-                      }"
-                      class="relative w-10 h-4 transition-colors duration-200 ease-in-out rounded-full"
+                  <div class="flex items-center space-x-2">
+                    <!-- Toggle Switch -->
+                    <label
+                      class="relative inline-flex items-center cursor-pointer"
                     >
-                      <span
-                        :class="{
-                          'translate-x-0': !isPublished,
-                          'translate-x-6': isPublished,
-                        }"
-                        class="absolute top-0 left-0 w-6 h-6 transition-transform duration-200 ease-in-out transform bg-white rounded-full"
-                      ></span>
-                    </div>
-                  </label>
+                      <input
+                        type="checkbox"
+                        class="sr-only peer"
+                        v-model="isPublished"
+                      />
+                      <div
+                        class="w-10 h-4 bg-customGray2 rounded-full peer peer-checked:after:translate-x-2/3 peer-checked:after:bg-customDarkBlue peer-checked:after:border-customDarkBlue after:content-[''] after:absolute after:-top-1.5 after:-left-1 after:bg-customBlack after:border-customBlack after:border after:rounded-full after:h-7 after:w-7 after:transition-all peer-checked:bg-customLightBlue"
+                      ></div>
+                    </label>
+                  </div>
                 </div>
               </div>
 
               <div class="flex items-center justify-between space-x-3">
                 <div class="flex items-center space-x-3">
                   <button
-                    class="px-4 py-2 text-white transition duration-200 bg-blue-600 rounded-md hover:bg-blue-700"
+                    class="px-4 py-2 text-white transition duration-200 rounded-md bg-customBlue"
                   >
                     Manage Domain
                   </button>
                   <button
-                    class="flex items-center px-4 py-2 text-white transition duration-200 bg-blue-600 rounded-md hover:bg-blue-700"
+                    class="flex items-center px-4 py-2 text-white transition duration-200 rounded-md bg-customBlue"
                   >
                     Edit Site
                     <i class="ml-2 fas fa-external-link-alt"></i>
                   </button>
                   <button
-                    class="flex items-center px-4 py-2 text-white transition duration-200 bg-blue-600 rounded-md hover:bg-blue-700"
+                    class="flex items-center px-4 py-2 text-white transition duration-200 rounded-md bg-customBlue"
                   >
                     View Live Site
                     <i class="ml-2 fas fa-external-link-alt"></i>
                   </button>
                 </div>
-                <div class="font-semibold text-blue-600">PUBLISHED</div>
+                <div class="font-semibold text-customBlue">PUBLISHED</div>
               </div>
             </div>
           </div>

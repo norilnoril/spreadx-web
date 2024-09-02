@@ -3,17 +3,19 @@
     <LeftSidebar />
     <!-- <NewSite /> -->
     <!-- <ProductList /> -->
-    <!-- <PaymentTable /> -->
+    <PaymentTable />
     <!-- <DomainCard /> -->
-    <DeliverySettings />
+    <!-- <DeliverySettings /> -->
+    <!-- <ManageDomain /> -->
   </div>
 </template>
 
 <script>
-import DeliverySettings from "./components/DeliverySettings.vue";
+// import DeliverySettings from "./components/DeliverySettings.vue";
 // import DomainCard from "./components/DomainCard.vue";
 import LeftSidebar from "./components/LeftSidebar.vue";
-// import PaymentTable from "./components/PaymentTable.vue";
+// import ManageDomain from "./components/ManageDomain.vue";
+import PaymentTable from "./components/PaymentTable.vue";
 // import NewSite from "./components/NewSite.vue";
 // import ProductList from "./components/ProductList.vue";
 
@@ -23,9 +25,10 @@ export default {
     LeftSidebar,
     // NewSite,
     // ProductList,
-    // PaymentTable,
+    PaymentTable,
     // DomainCard,
-    DeliverySettings,
+    // DeliverySettings,
+    // ManageDomain,
   },
 };
 </script>
