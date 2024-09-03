@@ -28,7 +28,7 @@
         </div>
 
         <!-- Menu Items -->
-        <div>
+        <div class="w-full overflow-hidden">
           <div
             :class="isChecked ? 'space-x-6' : 'space-x-0  justify-center'"
             class="flex items-center py-5 mb-2 px-7 bg-customBlue"
@@ -48,7 +48,7 @@
             <transition name="fade2">
               <span
                 v-if="isChecked"
-                class="text-base font-normal leading-6 transition-opacity duration-300 font-istok-web"
+                class="text-base font-normal leading-6 transition-opacity duration-75 whitespace-nowrap font-istok-web"
                 >Setting Up Your Site</span
               >
             </transition>
@@ -73,7 +73,7 @@
             <div class="block w-12 h-6 rounded-full box bg-customBlue"></div>
             <div
               :class="{ 'translate-x-full !bg-white': isChecked }"
-              class="absolute flex items-center justify-center w-5 h-5 p-1 transition bg-white rounded-full dot left-1 top-0.5"
+              class="absolute flex items-center justify-center w-5 h-5 p-1 bg-white rounded-full dot left-1 top-0.5"
             >
               <svg
                 v-show="isChecked"
@@ -112,7 +112,7 @@
           <transition name="fade2">
             <span
               v-if="isChecked"
-              class="ml-3 text-lg font-semibold leading-7 text-gray-400 transition-opacity duration-300"
+              class="ml-3 text-lg font-semibold leading-7 text-gray-400 transition-opacity duration-75 whitespace-nowrap"
               >COLLAPSE MENU</span
             >
           </transition>
@@ -122,7 +122,7 @@
           <div
             :class="{ 'justify-center': !isChecked }"
             id="status"
-            class="flex items-center px-4 pt-4 pb-2 space-x-[14px] cursor-pointer"
+            class="flex items-center w-full px-4 pt-4 pb-2 space-x-[14px] cursor-pointer"
             @click="chooseBox(1)"
           >
             <div
@@ -133,7 +133,7 @@
             <transition name="fade2">
               <span
                 v-if="isChecked"
-                class="text-xl font-bold leading-8 text-white transition-opacity duration-300 font-istok-web"
+                class="text-xl font-bold leading-8 text-white transition-opacity duration-75 font-istok-web"
                 >{{ selected.title }}</span
               >
             </transition>
