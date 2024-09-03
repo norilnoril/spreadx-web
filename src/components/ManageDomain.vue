@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <div class="pt-16 pr-32 pb-14 pl-[430px]">
+    <div :class="isChecked ? 'pl-[430px]' : 'pl-56'" class="pb-12 pr-32 pt-14">
       <div class="flex items-end justify-between mb-4">
         <h4
           class="text-xl font-bold leading-[12px] font-istok-web text-customBlue"
@@ -170,6 +170,12 @@
 <script>
 export default {
   name: "ManageDomain",
+  props: {
+    isChecked: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       domainProvider: "SpreadXDomain",

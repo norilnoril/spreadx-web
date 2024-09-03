@@ -1,6 +1,6 @@
 <template>
   <div class="h-screen">
-    <div class="pt-16 pr-32 pb-14 pl-[430px]">
+    <div :class="isChecked ? 'pl-[430px]' : 'pl-56'" class="pb-12 pr-32 pt-14">
       <div class="flex items-end justify-between mb-4">
         <h4
           class="text-xl font-bold leading-[12px] font-istok-web text-customBlue"
@@ -15,7 +15,7 @@
       </div>
 
       <div
-        class="h-[700px] pl-12 pr-12 mx-auto my-auto overflow-y-auto border py-7 border-customBorder1 rounded-2xl"
+        class="h-[660px] pl-12 pr-12 mx-auto my-auto overflow-y-auto border py-7 border-customBorder1 rounded-2xl"
       >
         <div class="flex items-center justify-center h-full">
           <div
@@ -95,6 +95,12 @@
 <script>
 export default {
   name: "DomainCard",
+  props: {
+    isChecked: {
+      type: Boolean,
+      required: true,
+    },
+  },
   data() {
     return {
       isPublished: true,

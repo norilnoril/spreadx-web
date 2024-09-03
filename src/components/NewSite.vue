@@ -1,6 +1,6 @@
 <template>
   <div class="h-full">
-    <div class="pt-16 pr-32 pb-14 pl-[430px]">
+    <div :class="isChecked ? 'pl-[430px]' : 'pl-56'" class="pb-12 pr-32 pt-14">
       <div class="flex items-end justify-between mb-4">
         <h4
           class="text-xl font-bold leading-[12px] font-istok-web text-customBlue"
@@ -15,7 +15,7 @@
       </div>
 
       <div
-        class="flex flex-col items-center justify-center h-full py-64 space-y-8 border border-customBorder1 rounded-2xl"
+        class="flex flex-col items-center justify-center h-[660px] space-y-8 border border-customBorder1 rounded-2xl"
       >
         <div>
           <h1
@@ -44,6 +44,12 @@
 <script>
 export default {
   name: "NewSite",
+  props: {
+    isChecked: {
+      type: Boolean,
+      required: true,
+    },
+  },
 };
 </script>
 
